@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
-import Form from "./Form";
-
+import Form from './Form';
 export default function LoginPage() {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width:1010px)");
@@ -29,6 +28,7 @@ export default function LoginPage() {
           <Typography fontWeight={"500"} variant='h5' sx={{mb:"1.5rem"}}>
           به شبکه اجتماعی خوش آمدید، شبکه اجتماعی برای گریزان از اجتماع!!
           </Typography>
+          <Form />
         </Box>
       </Box>
     </>

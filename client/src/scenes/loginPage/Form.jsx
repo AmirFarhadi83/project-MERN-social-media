@@ -54,7 +54,7 @@ export default function Form() {
         // this allows us to send form info with image
         const formData = new FormData();
         for (let value in values) {
-            formData.append(value, values[value])
+            formData.append(value, values[value]);
         }
         formData.append("picturePath", values.picture.name);
 
@@ -62,14 +62,36 @@ export default function Form() {
             "http://localhost:3001/auth/register",
             {
                 method: "POST",
-                body: formData
+                body: formData,
             }
         );
-        const savedUser = (await savedUserResponse).json();
+        const savedUser = await savedUserResponse.json();
         onSubmitProps.resetForm();
 
         if (savedUser) {
             setPageType("login")
+        }
+    };
+
+    const login = async (values, onSubmitProps) => {
+        const loggedInResponse = fetch(
+            "http://localhost:3001/auth/login",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(values),
+            }
+        );
+        const loggedIn = await loggedInResponse.json();
+        onSubmitProps.resetForm();
+        if (loggedIn) {
+            dispatch(
+                setLogin({
+                    user: loggedIn.user,
+                    token: loggedIn.token,
+                })
+            );
+            navigate("/home");
         }
     };
 
@@ -82,8 +104,8 @@ export default function Form() {
         <>
             <Formik
                 onSubmit={handleFormSubmit}
-                validationSchema={isLogin ? loginSchema : registerSchema}
                 initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+                validationSchema={isLogin ? loginSchema : registerSchema}
             >
                 {({
                     values,
@@ -107,7 +129,7 @@ export default function Form() {
                             {isRegister && (
                                 <>
                                     <TextField
-                                        label="First Name"
+                                        label="نام"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         value={values.firstName}
@@ -117,7 +139,7 @@ export default function Form() {
                                         sx={{ gridColumn: "span 2" }}
                                     />
                                     <TextField
-                                        label="Last Name"
+                                        label="نام خانوادگی"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         value={values.lastName}
@@ -127,7 +149,7 @@ export default function Form() {
                                         sx={{ gridColumn: "span 2" }}
                                     />
                                     <TextField
-                                        label="Location"
+                                        label="آدرس"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         value={values.location}
@@ -137,7 +159,7 @@ export default function Form() {
                                         sx={{ gridColumn: "span 4" }}
                                     />
                                     <TextField
-                                        label="Occupation"
+                                        label="شغل"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         value={values.occupation}
@@ -168,7 +190,7 @@ export default function Form() {
                                                         "&:hover": { cursor: "pointer" }
                                                     }}
                                                 >
-                                                    <input {...getInputProps()} />\
+                                                    <input {...getInputProps()} />
                                                     {!values.picture ? (
                                                         <p>عکس را در اینجا قرار دهید</p>
                                                     ) : (
@@ -185,7 +207,7 @@ export default function Form() {
                             )}
 
                             <TextField
-                                label="Email"
+                                label="ایمیل"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.email}
@@ -195,7 +217,7 @@ export default function Form() {
                                 sx={{ gridColumn: "span 4" }}
                             />
                             <TextField
-                                label="Password"
+                                label="رمز"
                                 type='password'
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -220,7 +242,7 @@ export default function Form() {
                                     "&:hover": { color: palette.primary.main }
                                 }}
                             >
-                                {isLogin ? "LOGIN" : "REGISTER"}
+                                {isLogin ? "ورود" : "ثبت نام"}
                             </Button>
                             <Typography
                                 onClick={() => {
