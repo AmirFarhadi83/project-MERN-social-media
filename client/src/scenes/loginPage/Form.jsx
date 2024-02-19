@@ -90,7 +90,7 @@ export default function Form() {
                     user: loggedIn.user,
                     token: loggedIn.token,
                 })
-            );
+            )
             navigate("/home");
         }
     };
