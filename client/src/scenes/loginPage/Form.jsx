@@ -50,7 +50,33 @@ export default function Form() {
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const handleFormSubmit = async (values, onSubmitProps) => { };
+    const register = async (values, onSubmitProps) => {
+        // this allows us to send form info with image
+        const formData = new FormData();
+        for (let value in values) {
+            formData.append(value, values[value])
+        }
+        formData.append("picturePath", values.picture.name);
+
+        const savedUserResponse = fetch(
+            "http://localhost:3001/auth/register",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+        const savedUser = (await savedUserResponse).json();
+        onSubmitProps.resetForm();
+
+        if (savedUser) {
+            setPageType("login")
+        }
+    };
+
+    const handleFormSubmit = async (values, onSubmitProps) => {
+        if (isLogin) await login(values, onSubmitProps);
+        if (isRegister) await register(values, onSubmitProps);
+    };
 
     return (
         <>
@@ -210,7 +236,7 @@ export default function Form() {
                                     },
                                 }}
                             >
-                                {isLogin ? "حسابی ندارید؟ ساخت حساب جدید." : "حساب دارید؟ وارد شوید‌."}
+                                {isLogin ? "حسابی ندارید؟ ساخت حساب جدید" : "حساب دارید؟ وارد شوید‌"}
                             </Typography>
                         </Box>
                     </form>
