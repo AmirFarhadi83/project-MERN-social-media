@@ -12,6 +12,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import state from 'state';
 
 export default function UserWidget({ userId, picturePath }) {
   const [user, setUser] = useState(null);
@@ -42,7 +43,6 @@ export default function UserWidget({ userId, picturePath }) {
     firstName,
     lastName,
     location,
-    phoneNumber,
     occupation,
     viewedProfile,
     impressions,
@@ -75,7 +75,7 @@ export default function UserWidget({ userId, picturePath }) {
                 }}>
                 {firstName} {lastName}
               </Typography>
-              <Typography color={medium}>{friends.length} دوستان</Typography>
+              <Typography color={medium}>{friends?.length} دوستان</Typography>
             </Box>
           </FlexBetween>
           <ManageAccountsOutlined />

@@ -1,46 +1,53 @@
 import React from 'react';
-import { useState } from 'react';
-import { Box, Button, TextField, useMediaQuery, Typography, useTheme } from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Formik } from 'formik';
-import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setLogin } from 'state';
-import Dropzone from 'react-dropzone';
-import FlexBetween from 'components/FlexBetween';
+import { useState } from "react";
+import {
+    Box,
+    Button,
+    TextField,
+    useMediaQuery,
+    Typography,
+    useTheme,
+} from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "state";
+import Dropzone from "react-dropzone";
+import FlexBetween from "components/FlexBetween";
+
+const registerSchema = yup.object().shape({
+    firstName: yup.string().required("required"),
+    lastName: yup.string().required("required"),
+    email: yup.string().email("invalid email").required("required"),
+    password: yup.string().required("required"),
+    location: yup.string().required("required"),
+    occupation: yup.string().required("required"),
+    picture: yup.string().required("required"),
+});
+
+const loginSchema = yup.object().shape({
+    email: yup.string().email("invalid email").required("required"),
+    password: yup.string().required("required"),
+});
+
+const initialValuesRegister = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    location: "",
+    occupation: "",
+    picture: "",
+};
+
+const initialValuesLogin = {
+    email: "",
+    password: "",
+};
 
 export default function Form() {
-
-    const registerSchema = yup.object().shape({
-        firstName: yup.string().required("required"),
-        lastName: yup.string().required("required"),
-        email: yup.string().email("invalid email").required("required"),
-        password: yup.string().required("required"),
-        location: yup.string().required("required"),
-        occupation: yup.string().required("required"),
-        picture: yup.string().required("required"),
-    });
-
-    const loginSchema = yup.object().shape({
-        email: yup.string().email("invalid email").required("required"),
-        password: yup.string().required("required"),
-    });
-
-    const initialValuesRegister = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        location: "",
-        occupation: "",
-        picture: "",
-    };
-
-    const initialValuesLogin = {
-        email: "",
-        password: "",
-    };
 
     const [pageType, setPageType] = useState("login");
     const { palette } = useTheme();
@@ -58,7 +65,7 @@ export default function Form() {
         }
         formData.append("picturePath", values.picture.name);
 
-        const savedUserResponse = fetch(
+        const savedUserResponse = await fetch(
             "http://localhost:3001/auth/register",
             {
                 method: "POST",
@@ -69,19 +76,16 @@ export default function Form() {
         onSubmitProps.resetForm();
 
         if (savedUser) {
-            setPageType("login")
+            setPageType("login");
         }
     };
 
     const login = async (values, onSubmitProps) => {
-        const loggedInResponse = fetch(
-            "http://localhost:3001/auth/login",
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
-            }
-        );
+        const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(values),
+        });
         const loggedIn = await loggedInResponse.json();
         onSubmitProps.resetForm();
         if (loggedIn) {
@@ -90,7 +94,7 @@ export default function Form() {
                     user: loggedIn.user,
                     token: loggedIn.token,
                 })
-            )
+            );
             navigate("/home");
         }
     };
