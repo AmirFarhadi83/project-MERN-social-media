@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
-import PostWidget from "./PostWidget"
+import PostWidget from "./PostWidget";
 
 export default function PostsWidget({ userId, isProfile = false }) {
     const dispatch = useDispatch();
@@ -34,9 +34,13 @@ export default function PostsWidget({ userId, isProfile = false }) {
             getPosts();
         }
     }, []); //eslint-disable-line react-hooks/exhaustive-deps
+
+    // const postList=()=>{
+    //     return posts.map((post)=> <PostWidget key={post._id} post={post}/>)
+    // };
     return (
         <>
-            {posts.map(({
+            {posts?.map(({
                 _id,
                 userId,
                 firstName,
