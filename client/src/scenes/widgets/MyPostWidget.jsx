@@ -60,29 +60,106 @@ export default function MyPostWidget({ picturePath }) {
 
     return (
         <>
-    <WidgetWrapper>
-        <FlexBetween gap={"1.5rem"}>
-            <UserImage image={picturePath} />
-            <InputBase
-            placeholder='توی فکرت چی میگذره...؟'
-            onChange={(e)=>setPost(e.target.value)}
-            value={post}
-            sx={{
-                width:"100%",
-                backgroundColor:palette.neutral.light,
-                borderRadius:"2rem",
-                padding:"1rem 2rem",
-            }}
-            />
-        </FlexBetween>
-        {isImage &&(
-            <Box
-            
-            >
+            <WidgetWrapper>
+                <FlexBetween gap={"1.5rem"}>
+                    <UserImage image={picturePath} />
+                    <InputBase
+                        placeholder='توی فکرت چی میگذره...؟'
+                        onChange={(e) => setPost(e.target.value)}
+                        value={post}
+                        sx={{
+                            width: "100%",
+                            backgroundColor: palette.neutral.light,
+                            borderRadius: "2rem",
+                            padding: "1rem 2rem",
+                        }}
+                    />
+                </FlexBetween>
+                {isImage && (
+                    <Box
+                        border={`1px solid ${medium}`}
+                        borderRadius={"5px"}
+                        mt={"1rem"}
+                        p={"1rem"}
+                    >
+                        <Dropzone
+                            acceptedFiles=".jpg,.jpeg,.png"
+                            multiple={false}
+                            onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                <FlexBetween>
+                                    <Box
+                                        {...getRootProps()}
+                                        border={`2px dashed ${palette.primary.main}`}
+                                        p={"1rem"}
+                                        width={"100%"}
+                                        sx={{
+                                            "&:hover": { cursor: "pointer" }
+                                        }}
+                                    >
+                                        <input {...getInputProps()} />
+                                        {!image ? (
+                                            <p>عکس را وارد کنید</p>
+                                        ) : (
+                                            <FlexBetween>
+                                                <Typography>{image.name}</Typography>
+                                                <EditOutlined />
+                                            </FlexBetween>
+                                        )}
+                                    </Box>
+                                    {image && (
+                                        <IconButton
+                                            onClick={() => setImage(null)}
+                                            sx={{ width: "15%" }}
+                                        >
+                                            <DeleteOutlined />
+                                        </IconButton>
+                                    )}
+                                </FlexBetween>
+                            )}
+                        </Dropzone>
+                    </Box>
+                )}
 
-            </Box>
-        )}
-    </WidgetWrapper>
+                <Divider sx={{ margin: "1.25rem 0" }} />
+
+                <FlexBetween>
+                    <FlexBetween gap={"0.25rem"} onClick={() => setIsImage(!isImage)}>
+                        <ImageOutlined sx={{ color: mediumMain }} />
+                        <Typography
+                            color={mediumMain}
+                            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+                        >
+                            عکس
+                        </Typography>
+                    </FlexBetween>
+
+                    {isNonMobileScreens ? (
+                        <>
+                            <FlexBetween gap={"0.25rem"}>
+                                <GifBoxOutlined sx={{ color: mediumMain }} />
+                                <Typography color={mediumMain}>ویدئو</Typography>
+                            </FlexBetween>
+
+                            <FlexBetween gap={"0.25rem"}>
+                                <AttachFileOutlined sx={{ color: mediumMain }} />
+                                <Typography color={mediumMain}>ضمیمه</Typography>
+                            </FlexBetween>
+
+                            <FlexBetween gap={"0.25rem"}>
+                                <MicOutlined sx={{ color: mediumMain }} />
+                                <Typography color={mediumMain}>صدا</Typography>
+                            </FlexBetween>
+                        </>
+                    ) : (
+                        <FlexBetween gap={"0.25rem"}>
+                            <MoreHorizOutlined sx={{ color: mediumMain }} />
+                        </FlexBetween>
+                    )}
+                </FlexBetween>
+
+            </WidgetWrapper>
         </>
     );
 };
