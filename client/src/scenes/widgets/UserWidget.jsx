@@ -12,13 +12,12 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import state from 'state';
 
-export default function UserWidget({ userId, picturePath}) {
+export default function UserWidget({ userId, picturePath }) {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
-  const token = useSelector(state => state.token);
+  const token = useSelector((state) => state.token);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
@@ -33,7 +32,7 @@ export default function UserWidget({ userId, picturePath}) {
   };
   useEffect(() => {
     getUser();
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
     return null;
@@ -62,15 +61,16 @@ export default function UserWidget({ userId, picturePath}) {
             <UserImage image={picturePath} />
             <Box>
               <Typography
-                variant='h4'
+                variant="h4"
                 color={dark}
-                fontWeight={"500"}
+                fontWeight="500"
                 sx={{
                   "&:hover": {
                     color: palette.primary.light,
                     cursor: "pointer",
-                  }
-                }}>
+                  },
+                }}
+              >
                 {firstName} {lastName}
               </Typography>
               <Typography color={medium}>{friends?.length} دوستان</Typography>
