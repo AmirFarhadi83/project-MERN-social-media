@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import state from 'state';
 
-export default function UserWidget({ userId, picturePath }) {
+export default function UserWidget({ userId, picturePath}) {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
@@ -48,8 +48,6 @@ export default function UserWidget({ userId, picturePath }) {
     impressions,
     friends,
   } = user;
-
-
 
   return (
     <>
