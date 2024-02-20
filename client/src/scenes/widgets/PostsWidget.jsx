@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget"
 
-export default function PostsWidget() {
+export default function PostsWidget({ userId, isProfile = false }) {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);
     const token = useSelector((state) => state.token);
