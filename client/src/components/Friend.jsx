@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-export default function Friend() {
+export default function Friend({ friendId, name, subtitle, userPicturePath }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { _id } = useSelector((state) => state.user);
@@ -42,6 +42,27 @@ export default function Friend() {
             <FlexBetween>
                 <FlexBetween gap={"1rem"}>
                     <UserImage image={userPicturePath} size='55px' />
+                    <Box
+                        onClick={() => {
+                            navigate(`/profile/${friendId}`);
+                            navigate(0);
+                        }}
+                    >
+                        <Typography
+                            color={main}
+                            variant='h5'
+                            fontWeight={"500"}
+                            sx={{
+                                "&:hover": {
+                                    color: palette.primary.light,
+                                    cursor: "pointer"
+                                }
+                            }}
+                        >
+                            {name}
+                        </Typography>
+                    </Box>
+
                 </FlexBetween>
             </FlexBetween>
         </>
