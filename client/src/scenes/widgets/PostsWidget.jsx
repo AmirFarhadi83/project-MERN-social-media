@@ -35,6 +35,7 @@ export default function PostsWidget({ userId, isProfile = false }) {
         }
     }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
+    if(!posts) return null;
     // const postList=()=>{
     //     return posts.map((post)=> <PostWidget key={post._id} post={post}/>)
     // };
