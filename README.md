@@ -1,4 +1,4 @@
-MERN App
+MERN App - 95% Complited
 
 ![Social Media App](https://github.com/AmirFarhadi83/project-MERN-social-media/assets/139977859/eae6094e-e080-4c9c-ac76-beb63cf7c942)
 
