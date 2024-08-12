@@ -8,6 +8,7 @@ export default function PostsWidget({ userId, isProfile = false }) {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);
     const token = useSelector((state) => state.token);
+    console.log(posts)
 
     const getPosts = async () => {
         const response = await fetch("http://localhost:3001/posts", {
@@ -15,9 +16,9 @@ export default function PostsWidget({ userId, isProfile = false }) {
             headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
-        dispatch(setPosts({ posts: data }));
+        dispatch(setPosts({ posts: data }))
+        
     };
-
     const getUserPosts = async () => {
         const response = await fetch(
             `http://localhost:3001/posts/${userId}/posts`,
@@ -37,12 +38,10 @@ export default function PostsWidget({ userId, isProfile = false }) {
             getPosts();
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
     if (!posts) return null;
     // const postList=()=>{
     //     return posts.map((post)=> <PostWidget key={post._id} post={post}/>)
     // };
-    console.log(posts)
     return (
         <>
             {posts.map(
